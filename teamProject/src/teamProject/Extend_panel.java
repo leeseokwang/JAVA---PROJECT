@@ -128,8 +128,4 @@ public class Extend_panel extends JPanel {
 		previous.setBackground(new Color(0x8e8e8e));
 		previous.setBounds(530, 810, 200, 90);
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/temp

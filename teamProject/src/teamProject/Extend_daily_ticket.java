@@ -183,4 +183,8 @@ public class Extend_daily_ticket extends JPanel {
 		previous.setBounds(530, 810, 200, 90);
 	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/temp

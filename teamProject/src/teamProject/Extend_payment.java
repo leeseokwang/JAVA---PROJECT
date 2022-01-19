@@ -275,4 +275,8 @@ public class Extend_payment extends JPanel {
 			a.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/temp

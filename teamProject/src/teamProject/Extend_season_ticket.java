@@ -166,4 +166,8 @@ public class Extend_season_ticket extends JPanel{
 		previous.setBackground(new Color(0xd0d0d0));
 		previous.setBounds(530, 810, 200, 90);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/temp

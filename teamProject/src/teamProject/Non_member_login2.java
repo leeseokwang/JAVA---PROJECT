@@ -1,4 +1,5 @@
 package teamProject;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -6,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,19 +20,19 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Member_login extends JPanel {
-	private JTextField id;
-	private JButton confirm,previous,f_id,f_pw;
-	private Start F;
-	private JLabel chk,pw2;
+public class Non_member_login2 extends JPanel{
+	private JTextField ph;
 	private JPasswordField pw;
+	private JLabel chk;
+	private JButton confirm,previous;
+	private Start F;
 	
 	ImageIcon icon = new ImageIcon("teamProject/src/icons/back4.jpg");
 	public void paintComponent(Graphics g) {
 		g.drawImage(icon.getImage(), 0, 0, null);
 	}
 	
-	public Member_login(Start f) {
+	Non_member_login2(Start f){
 		setSize(800, 1000);
 		setLayout(null);
 		F = f;
@@ -44,36 +42,29 @@ public class Member_login extends JPanel {
 		header.setFocusable(true);
 		header.setBounds(0, 0, 800, 130);
 		
-		JLabel string1 = new JLabel("회원 로그인");
+		JLabel string1 = new JLabel("비회원 로그인");
 		add(string1);
 		string1.setFont(new Font("NanumBarunGothic", Font.BOLD, 50));
 		string1.setForeground(new Color(0x222222));
 		string1.setBounds(0, 230, 800, 100);
 		string1.setHorizontalAlignment(JLabel.CENTER);
 		
-		id = new JTextField("아이디");
-		id.addMouseListener(new MouseAdapter() {		
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				id.setText("");
-			}
-		});
-		add(id);
-		id.setFont(new Font("NanumGothic", Font.PLAIN, 40));
-		id.setForeground(new Color(0xd0d0d0));
-		id.setBounds(115, 400, 560, 70);
-		id.setText("아이디 입력");
-		id.addFocusListener(new FocusAdapter() {
+		ph = new JTextField("전화번호");
+		ph.addFocusListener(new FocusAdapter() {		
 			@Override
 			public void focusGained(FocusEvent e) {
-				id.setText("");
-				id.setForeground(new Color(0x000000));
+				ph.setText("");
+				ph.setForeground(new Color(0x000000));
 			}
-		});	
-		
+		});
+		add(ph);
+		ph.setFont(new Font("NanumGothic", Font.PLAIN, 40));
+		ph.setForeground(new Color(0xd0d0d0));
+		ph.setBounds(115, 400, 560, 70);
+		ph.setText("전화번호 입력");
 		
 		pw = new JPasswordField("비밀번호");
-		pw.addFocusListener(new FocusAdapter() {
+		pw.addFocusListener(new FocusAdapter() {		
 			@Override
 			public void focusGained(FocusEvent e) {
 				pw.setText("");
@@ -86,7 +77,7 @@ public class Member_login extends JPanel {
 		pw.setBounds(115, 500, 560, 70);
 		
 		chk = new JLabel("");
-		chk.setBounds(115,540,600,100);
+		chk.setBounds(115,670,600,100);
 		add(chk);
 	
 		confirm = new JButton("확인");
@@ -102,27 +93,25 @@ public class Member_login extends JPanel {
 							"1234");
 					System.out.println("연결 생성 완료.");
 					
-					PreparedStatement find_id = conn.prepareStatement("SELECT * FROM MEMBERS");
+					PreparedStatement find_id = conn.prepareStatement("SELECT * FROM NON_MEMBERS");
 					boolean chk_member = false;
 					ResultSet rs = find_id.executeQuery();
 				
 					
 					while (rs.next()){
-						if(rs.getString("MEMBER_ID").equals(id.getText())&&rs.getString("MEMBER_PW").equals(pw.getText())) {
-
-							chk_member = true;
+						if(rs.getString("NON_MEMBER_PHONE").equals(ph.getText())&&rs.getString("NON_MEMBER_PW").equals(pw.getText())) {
 							
+							chk_member = true;
 							System.out.println("성공");
-							f.add("main_screen",new Main_screen(f,id.getText(),0)); // 회원 = 0 비회원 = 1
+							f.add("main_screen",new Main_screen(f,ph.getText(),1));// 회원 = 0 비회원 = 1
 							f.main_screen_Panel();	
-
-							id.setText("아이디");
+							ph.setText("전화번호");
 							pw.setText("패스워드");
 							break;
 						}						
 					}	
 					if (chk_member == false) {
-						chk.setText("아이디 혹은 비밀번호가 올바르지 않습니다.");
+						chk.setText("전화번호 혹은 비밀번호가 올바르지 않습니다.");
 					}
 					chk_member =false;
 					
@@ -132,11 +121,9 @@ public class Member_login extends JPanel {
 					
 				} catch (SQLException a) {
 					a.printStackTrace();
-				}
-				
-				
+				}				
 			}
-		});
+		});		
 		add(confirm);
 		confirm.setFont(new Font("NanumGothic", Font.PLAIN, 40));
 		confirm.setForeground(new Color(0xf5f6f7));
@@ -148,10 +135,10 @@ public class Member_login extends JPanel {
 		previous.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				id.setText("아아디");
+				ph.setText("전화번호");
 				pw.setText("비밀번호");
 				chk.setText("");
-				id.setForeground(new Color(0xd0d0d0));
+				ph.setForeground(new Color(0xd0d0d0));
 				pw.setForeground(new Color(0xd0d0d0));
 				f.member_or_non_member_Panel();
 			}
@@ -162,45 +149,5 @@ public class Member_login extends JPanel {
 		previous.setOpaque(true);
 		previous.setBackground(new Color(0x8e8e8e));
 		previous.setBounds(530, 810, 200, 90);
-		
-		f_id = new JButton("아이디 찾기");
-		f_id.addActionListener(new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				id.setText("아아디");
-				pw.setText("비밀번호");
-				chk.setText("");
-				F.find_id_Panel();
-			}
-		});
-		add(f_id);
-		f_id.setFont(new Font("NanumGothic", Font.PLAIN | Font.BOLD , 18));
-		f_id.setForeground(new Color(0xf5f6f7));
-		f_id.setOpaque(true);
-		f_id.setBackground(new Color(0x5bb91b));
-		f_id.setBounds(355, 735, 150, 50);
-		
-		f_pw = new JButton("비밀번호 찾기");
-		f_pw.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				id.setText("아아디");
-				pw.setText("비밀번호");
-				chk.setText("");
-				F.find_pw_Panel();
-			}
-		});
-		add(f_pw);
-		f_pw.setFont(new Font("NanumGothic", Font.PLAIN | Font.BOLD , 18));
-		f_pw.setForeground(new Color(0xf5f6f7));
-		f_pw.setOpaque(true);
-		f_pw.setBackground(new Color(0x5bb91b));
-		f_pw.setBounds(525, 735, 150, 50);
-		
-		
-		setVisible(true);
-	}
-	public static String idm(String idd) {
-		return idd;
 	}
 }

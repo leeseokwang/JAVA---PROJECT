@@ -1,2 +1,2 @@
-# new_project
-new_project
+# 3조 프로젝트
+스터디카페 키오스크
